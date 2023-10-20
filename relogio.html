@@ -6,10 +6,27 @@
     <title>Relogio</title>
 </head>
 <body>
-    
+    <h1 id="clockDisplay"></h1>
 
     <script>
+        function adjustTime(value){
+            return value < 10 ? "0" + value : "" + value;
+        }
+        const clockDisplay = document.querySelector("#clockDisplay");
+        
+        const clockInterval = setInterval(function(){
+            const actualDate = new Date();
+            const hour = adjustTime(actualDate.getHours());
+            const minute = adjustTime(actualDate.getMinutes());
+            const second = adjustTime(actualDate.getSeconds());
+            console.log(adjustTime(actualDate.getHours()),adjustTime(actualDate.getMinutes()),adjustTime(actualDate.getSeconds()));
+            
+            clockDisplay.textContent = hour + ":" + minute + ":" + second;
+        }, 1000);
 
+        setTimeout(function(){
+            clearInterval(clockInterval);
+        }, 5000);
     </script>
 </body>
 </html>
