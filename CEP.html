@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEP</title>
+    <title>Fabrício Panisson</title>
 </head>
 <body>
     <form id="frmCepSearch">
@@ -13,16 +13,31 @@
         <input type="text" id="cepSearch" maxlength="8" minlength="8" required placeholder="DIGITE SEU CEP">
 
     </form>
+    <h1 id="showCepInfo"></h1>
     <script>
         const frmCepSearch = document.querySelector("#frmCepSearch");
+        const showCepInfo = document.querySelector("#showCepInfo");
 
-        frmCepSearch.addEventListener("submit", function(){
+        frmCepSearch.addEventListener("submit", function(event){
             event.preventDefault();
 
             const cepValue = frmCepSearch.cepSearch.value;
-            console.log(cepValue);
+            // console.log(cepValue);
             
-        })
+            const request = fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
+            
+            request
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(cepData){
+
+                    showCepInfo.textContent = `Cidade: ${cepData.localidade}, UF: ${cepData.uf}`;
+                })
+                .catch(function(response){
+                    console.log("erro");
+                })
+        });
     </script>
 </body>
 </html>
